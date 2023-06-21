@@ -25,11 +25,44 @@ const getUserById = async (req, res) => {
     }
 };
 
-const createUser = async (req, res) => {
-    const { username, email, password } = req.body;
+const getUserCart = async (req, res) => {
+    const { id } = req.params;
 
     try {
-        const newUser = await userService.createUser({ username, email, password });
+        const user = await userService.getUserCart(parseInt(id));
+
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        res.status(200).json(user);
+    } catch (error) {
+        console.log(error)
+        res.status(500).json(error);
+    }
+};
+
+const getUserByEmail = async (req, res) => {
+    const { email } = req.params;
+
+    try {
+        const user = await userService.getUserByEmail(email);
+
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to retrieve user' });
+    }
+};
+
+const createUser = async (req, res) => {
+    const { email, password } = req.body;
+
+    try {
+        const newUser = await userService.createUser({ email, password });
         res.status(201).json(newUser);
     } catch (error) {
         res.status(500).json({ error: 'Failed to create user' });
@@ -38,10 +71,10 @@ const createUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
     const { id } = req.params;
-    const { username, email, password } = req.body;
+    const { email, password } = req.body;
 
     try {
-        const updatedUser = await userService.updateUser(parseInt(id), { username, email, password });
+        const updatedUser = await userService.updateUser(parseInt(id), { email, password });
 
         if (!updatedUser) {
             return res.status(404).json({ error: 'User not found' });
@@ -52,6 +85,7 @@ const updateUser = async (req, res) => {
         res.status(500).json({ error: 'Failed to update user' });
     }
 };
+
 
 const deleteUser = async (req, res) => {
     const { id } = req.params;
@@ -67,6 +101,8 @@ const deleteUser = async (req, res) => {
 module.exports = {
     getAllUsers,
     getUserById,
+    getUserCart,
+    getUserByEmail,
     createUser,
     updateUser,
     deleteUser,

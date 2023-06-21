@@ -20,6 +20,31 @@ const getUserById = async (userId) => {
     }
 };
 
+
+
+const getUserByEmail = async (email) => {
+    try {
+        const user = await prisma.user.findUnique({ where: { email: email } });
+        return user;
+    } catch (error) {
+        throw new Error("Failed to retrieve user");
+    }
+};
+
+const getByCredentials = async (email, password) => {
+    try {
+        const user = await prisma.user.findUnique({
+            where: {
+                email,
+                password
+            }
+        });
+        return user;
+    } catch (error) {
+        throw new Error(error);
+    }
+}
+
 const createUser = async (userData) => {
     try {
         const newUser = await prisma.user.create({ data: userData });
@@ -39,6 +64,8 @@ const updateUser = async (userId, userData) => {
     }
 };
 
+
+
 const deleteUser = async (userId) => {
     try {
         await prisma.user.delete({ where: { id: userId } });
@@ -50,6 +77,8 @@ const deleteUser = async (userId) => {
 module.exports = {
     getAllUsers,
     getUserById,
+    getUserByEmail,
+    getByCredentials,
     createUser,
     updateUser,
     deleteUser,

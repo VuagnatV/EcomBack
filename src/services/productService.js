@@ -9,6 +9,7 @@ async function createProduct(data) {
         const product = await prisma.product.create({ data });
         return product;
     } catch (error) {
+        console.log(error)
         throw new Error('Failed to create product.');
     }
 }
