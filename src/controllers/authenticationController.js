@@ -43,9 +43,7 @@ const login = async (req, res) => {
             else {
                 req.session.user = { id: user.id }
                 console.log(req.session.user)
-                res.json({
-                    status: "Loged in", id: user.id
-                });
+                res.send(req.session.sessionID)
             }
         })
     }

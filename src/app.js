@@ -18,7 +18,7 @@ let redisStore = new RedisStore({
 
 app.use(cors({
     origin: 'https://ecom-pvir.onrender.com',
-    methods: ['POST', 'PUT', 'GET', 'DELETE'],
+    methods: ['POST', 'PUT', 'GET', 'DELETE', 'OPTIONS', 'HEAD'],
     credentials: true
 }))
 
@@ -28,8 +28,9 @@ app.use(sessions({
     resave: false,
     store: redisStore,
     cookie: {
-        secure: true,
+        secure: false,
         httpOnly: true,
+        sameSite: false
     }
 }));
 
