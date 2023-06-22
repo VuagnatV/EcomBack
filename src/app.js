@@ -8,10 +8,9 @@ const routes = require('./routes')
 const redis = require('redis')
 const app = express()
 
-let redisClient = createClient()
+let redisClient = redis.createClient({ url: 'redis://red-ci9qm5mnqql8alnj93a0:6379' })
 redisClient.connect().catch(console.error)
 
-// Initialize store.
 let redisStore = new RedisStore({
     client: redisClient,
     prefix: "ecom:",
