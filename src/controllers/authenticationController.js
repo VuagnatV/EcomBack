@@ -41,7 +41,7 @@ const login = async (req, res) => {
             }
 
             else {
-                req.session.user = { id: user.id }
+                req.session.user = { id: user.id, role: user.role }
                 console.log(req.session.sessionID)
                 res.json({
                     status: "Loged in", id: user.id

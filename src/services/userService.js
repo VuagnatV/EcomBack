@@ -45,9 +45,15 @@ const getByCredentials = async (email, password) => {
     }
 }
 
-const createUser = async (userData) => {
+const createUser = async ({ email, password }) => {
     try {
-        const newUser = await prisma.user.create({ data: userData });
+        const newUser = await prisma.user.create({
+            data: {
+                email,
+                password,
+                role: "user"
+            }
+        });
         return newUser;
     } catch (error) {
         throw new Error('Failed to create user');
