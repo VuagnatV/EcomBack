@@ -20,7 +20,7 @@ app.use(cors({
     origin: 'https://ecom-pvir.onrender.com',
     methods: ['POST', 'PUT', 'GET', 'DELETE', 'OPTIONS', 'HEAD'],
     credentials: true,
-    preflightContinue: true,
+    //preflightContinue: true,
 }))
 
 app.use(sessions({
