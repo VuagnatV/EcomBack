@@ -25,9 +25,12 @@ app.use(cors({
 app.use(sessions({
     secret: process.env.SECRET,
     saveUninitialized: true,
-    cookie: { maxAge: 360000, secure: true },
     resave: false,
-    store: redisStore
+    store: redisStore,
+    cookie: {
+        secure: true,
+        httpOnly: true,
+    }
 }));
 
 app.use(express.json());
