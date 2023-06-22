@@ -53,6 +53,7 @@ const deleteCart = async (req, res) => {
 const updateUserCart = async (req, res) => {
     const { id } = req.params;
     const { productId } = req.body;
+    console.log(req)
 
     try {
         const cartItem = await cartService.getCartItem(parseInt(id), parseInt(productId))

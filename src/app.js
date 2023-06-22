@@ -16,11 +16,12 @@ let redisStore = new RedisStore({
     prefix: "ecom:",
 })
 
-/*app.use(cors({
+app.use(cors({
     origin: 'https://ecom-pvir.onrender.com',
     methods: ['POST', 'PUT', 'GET', 'DELETE', 'OPTIONS', 'HEAD'],
-    credentials: true
-}))*/
+    credentials: true,
+    preflightContinue: true,
+}))
 
 app.use(sessions({
     secret: process.env.SECRET,
@@ -28,11 +29,13 @@ app.use(sessions({
     resave: false,
     store: redisStore,
     cookie: {
-        secure: false,
+        secure: true,
         httpOnly: true,
-        sameSite: false
+        sameSite: 'none'
     }
 }));
+
+app.enable('trust proxy')
 
 app.use(express.json());
 
