@@ -8,7 +8,7 @@ const routes = require('./routes')
 const app = express()
 
 app.use(cors({
-    origin: 'https://ecom.onrender.com',
+    origin: 'https://ecom-pvir.onrender.com/',
     methods: ['POST', 'PUT', 'GET', 'DELETE'],
     credentials: true
 }))
