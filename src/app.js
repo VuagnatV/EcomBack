@@ -5,9 +5,7 @@ const express = require('express')
 const cors = require('cors')
 const sessions = require('express-session')
 const routes = require('./routes')
-
-import { createClient } from "redis"
-
+const redis = require('redis')
 const app = express()
 
 let redisClient = createClient()
