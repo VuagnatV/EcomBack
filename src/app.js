@@ -1,11 +1,23 @@
 require('dotenv').config()
 
+const RedisStore = require("connect-redis").default
 const express = require('express')
 const cors = require('cors')
 const sessions = require('express-session')
 const routes = require('./routes')
 
+import { createClient } from "redis"
+
 const app = express()
+
+let redisClient = createClient()
+redisClient.connect().catch(console.error)
+
+// Initialize store.
+let redisStore = new RedisStore({
+    client: redisClient,
+    prefix: "ecom:",
+})
 
 app.use(cors({
     origin: 'https://ecom-pvir.onrender.com',
@@ -17,7 +29,8 @@ app.use(sessions({
     secret: process.env.SECRET,
     saveUninitialized: true,
     cookie: { maxAge: 360000, secure: true },
-    resave: false
+    resave: false,
+    store: redisStore
 }));
 
 app.use(express.json());
